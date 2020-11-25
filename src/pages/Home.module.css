@@ -1,0 +1,19 @@
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.name {
+    font-size: 4vw;
+}
+
+.background {
+    position: fixed;
+    height: 100%;
+    left: 10%;
+    right: 10%;
+    background-image: url('../media/switch.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+}

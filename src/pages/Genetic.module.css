@@ -1,0 +1,25 @@
+.container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-direction: row;
+}
+
+.name {
+    writing-mode: vertical-lr;
+    transform:rotate(-180deg);
+    font-size: 4vw;
+    flex: 1;
+}
+
+.background {
+    position: absolute;
+    height: 100%;
+    left: 10%;
+    right: 10%;
+    background-image: url('../media/2ds.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    flex: 10;
+}
