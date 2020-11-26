@@ -1,25 +1,30 @@
 .container {
-    display: flex;
+    position: fixed;
     width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    flex-direction: row;
+    height: 100%;
 }
 
 .name {
+    font-family: 'Press Start 2P', cursive;
     writing-mode: vertical-lr;
     transform:rotate(-180deg);
-    font-size: 4vw;
-    flex: 1;
+    /* background-color: blue; */
+    font-size: 10vh;
+    /* right: 10%; */
+    left: 15%;
+    top: 10%;
+    bottom: 10%;
+    width: 10%;
+    position: absolute;
 }
 
 .background {
     position: absolute;
+    /* background-color: blueviolet;   */
     height: 100%;
-    left: 10%;
+    width: 60%;
     right: 10%;
     background-image: url('../media/2ds.png');
     background-repeat: no-repeat;
     background-size: contain;
-    flex: 10;
 }
