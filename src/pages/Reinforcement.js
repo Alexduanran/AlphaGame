@@ -1,4 +1,4 @@
-import css from './Genetic.module.css';
+import css from './Reinforcement.module.css';
 import {
     BrowserRouter as Router,
     Switch,
@@ -6,7 +6,7 @@ import {
     Link
 } from "react-router-dom";
 
-function Genetic(props) {
+function Reinforcement(props) {
   return (
     <Router>
         <div className={css.container}>
@@ -46,4 +46,4 @@ function Genetic(props) {
   );
 }
 
-export default Genetic;
+export default Reinforcement;

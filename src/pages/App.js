@@ -1,6 +1,8 @@
 import css from './App.module.css';
-import Home from './Home'
-import Genetic from './Genetic'
+import Home from './Home';
+import Genetic from './Genetic';
+import Reinforcement from './Reinforcement';
+import Battle from './Battle';
 import {
   Router,
   Switch,
@@ -16,8 +18,14 @@ function App() {
     <div>
       <Router history={history}>
         <Switch>
-          <Route path='/snake'>
-            <Genetic />
+          <Route path='/*/genetic'>
+            <Genetic history={history}/>
+          </Route>
+          <Route path='/*/reinforcement'>
+            <Reinforcement history={history}/>
+          </Route>
+          <Route path='*/battle'>
+            <Battle history={history}/>
           </Route>
           <Route path='/'>
             <Home history={history}/>

@@ -5,7 +5,7 @@ import {
     Switch,
     Route,
     Link
-  } from "react-router-dom";
+} from "react-router-dom";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Pagination, EffectCoverflow } from 'swiper';
 import 'swiper/swiper.scss';
@@ -72,7 +72,7 @@ function Home(props) {
     }
 
     return (
-        <Router history={props.history}>
+        <Router>
             <div className={css.container}>
                 <h1 className={css.name}>
                     <Link to='/'>
