@@ -17,7 +17,7 @@ function Reinforcement(props) {
                 <div className={css.gameScreen}>
                     <Switch>
                         <Route path='/snake'>
-                            snake
+                            {/* <Snake /> */}
                         </Route>
                         <Route path='/pong'>
                             pong

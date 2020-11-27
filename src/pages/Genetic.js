@@ -6,6 +6,8 @@ import {
     Link
 } from "react-router-dom";
 
+// import Pong from '../games/pong/Pong'
+
 function Genetic(props) {
   return (
     <Router>
@@ -20,7 +22,7 @@ function Genetic(props) {
                             snake
                         </Route>
                         <Route path='/pong'>
-                            pong
+                            {/* <Pong /> */}
                         </Route>
                         <Route path='/flappybird'>
                             flappybird
