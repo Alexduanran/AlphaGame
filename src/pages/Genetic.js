@@ -6,6 +6,7 @@ import {
     Link
 } from "react-router-dom";
 
+import SnakeEnv from "../games/snake/SnakeEnv"
 // import Pong from '../games/pong/Pong'
 
 function Genetic(props) {
@@ -19,7 +20,7 @@ function Genetic(props) {
                 <div className={css.gameScreen}>
                     <Switch>
                         <Route path='/snake'>
-                            snake
+                            <SnakeEnv />
                         </Route>
                         <Route path='/pong'>
                             {/* <Pong /> */}
@@ -32,7 +33,8 @@ function Genetic(props) {
                 <div className={css.plotScreen}>
                     <Switch>
                         <Route path='/snake'>
-                            snake
+                            {/* <SnakeEnv /> */}
+                            Snake
                         </Route>
                         <Route path='/pong'>
                             pong

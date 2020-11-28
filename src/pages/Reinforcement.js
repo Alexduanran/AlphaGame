@@ -6,6 +6,8 @@ import {
     Link
 } from "react-router-dom";
 
+import SnakeEnv from "../games/snake/SnakeEnv"
+
 function Reinforcement(props) {
   return (
     <Router>
@@ -17,7 +19,7 @@ function Reinforcement(props) {
                 <div className={css.gameScreen}>
                     <Switch>
                         <Route path='/snake'>
-                            {/* <Snake /> */}
+                            <SnakeEnv />
                         </Route>
                         <Route path='/pong'>
                             pong
