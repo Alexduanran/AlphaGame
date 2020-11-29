@@ -1,47 +1,60 @@
-var nj = require('numjs');
+var nj = require('@aas395/numjs');
 
-function Population(individuals) {
-    this.individuals = individuals;
+class Population {
+    constructor(individuals) {
+        this.individuals = individuals;
+    }
 
-    const num_individuals = () => {
+    num_individuals = () => {
         return this.individuals.length;
     }
 
-    const num_individuals_ = () => {
+    num_individuals_ = () => {
         throw new Error('Cannot set the number of individuals. You must change Population.individuals instead');
     }
 
-    const num_genes = () => {
+    num_genes = () => {
         return this.individuals[0].chromosome.shape[1];
     }
 
-    const num_genes_ = () => {
+    num_genes_ = () => {
         throw new Error('Cannot set the number of genes. You must change Population.individuals instead');
     }
 
-    const average_fitness = () => {
-        return this.individuals.reduce((a,b) => {return a.fitness + b.fitness}, 0) / num_individuals();
+    average_fitness = () => {
+        var sum = 0;
+        for (var individual of this.individuals)
+            sum += individual.fitness;
+        return sum / this.individuals.length;
     }
 
-    const average_fitness_ = () => {
+    average_fitness_ = () => {
         throw new Error('Cannot set average fitness. This is a read-only property.');
     }
 
-    const fittest_individual = () => {
-        return Math.max.apply(Math, this.individuals.map(a=>a.fitness));
+    fittest_individual = () => {
+        var best = 0;
+        var indi = null;
+        for (var individual of this.individuals) {
+            if (individual.fitness > best) {
+                best = individual.fitness;
+                indi = individual;
+            }
+        }
+        return indi;
     }
 
-    const fittest_individual_ = () => {
+    fittest_individual_ = () => {
         throw new Error('Cannot set fittest individual. This is a read-only property');
     }
 
-    const calculate_fitness = () => {
+    calculate_fitness = () => {
         for (var individual of this.individuals) {
             individual.calculate_fitness();
         }
     }
 
-    const get_fitness_std = () => {
+    get_fitness_std = () => {
         return nj.std(nj.array(this.individuals.map(a=>a.fitness)));
     }
 }

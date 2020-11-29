@@ -1,4 +1,5 @@
-var nj = require('numjs')
+var nj = require('@aas395/numjs');
+const random = require('random');
 
 export function elitism_selection(population, num_individuals) {
     var individuals = population.individuals.sort(a=>a.fitness).reverse();
@@ -7,11 +8,14 @@ export function elitism_selection(population, num_individuals) {
 
 export function roulette_wheel_selection(population, num_individuals) {
     var selection = [];
-    const wheel = population.individuals.reduce((a,b)=>{return a+b},0);
+    var wheel = 0;
+    for (var individual of population.individuals) {
+        wheel += individual.fitness;
+    }
     for (var i=0; i<num_individuals; i++) {
-        const pick = nj.random.uniform(0, wheel);
+        const pick = random.float(0, wheel);
         var current = 0;
-        for (var individual of population.individual) {
+        for (var individual of population.individuals) {
             current += individual.fitness;
             if (current > pick) {
                 selection.push(individual);
@@ -19,4 +23,5 @@ export function roulette_wheel_selection(population, num_individuals) {
             }
         }
     }
+    return selection;
 }

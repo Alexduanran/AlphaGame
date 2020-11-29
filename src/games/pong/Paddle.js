@@ -4,10 +4,11 @@ import {FeedForwardNetwork, linear, sigmoid, tanh, relu, get_activation_by_name}
 // var nj = require('numjs');
 
 class Paddle extends Individual{
-    constructor(p5, xPaddle, yPaddle, xSpeed, boardSize, chromosome=null, hidden_layer_architecture=[20,12], hidden_activation='relu', output_activation='sigmoid') {
+    constructor(p5, xPaddle=0, yPaddle=200, ySpeed=0, boardSize, chromosome=null, hidden_layer_architecture=[20,12], hidden_activation='relu', output_activation='sigmoid') {
+        super(Individual());
         this.xPaddle = xPaddle;
         this.yPaddle = yPaddle;
-        this.xSpeed = xSpeed;
+        this.ySpeed = ySpeed;
         this.board_size = boardSize;
 
         this.fitness = 0;
@@ -29,7 +30,7 @@ class Paddle extends Individual{
         this.network_architecture = [num_inputs]                          // Inputs
         this.network_architecture.push(...this.hidden_layer_architecture)  // Hidden layers
         this.network_architecture.push(3)                               // 3 outputs, ['left', 'still', 'right']
-        this.network = FeedForwardNetwork(this.network_architecture,
+        this.network = new FeedForwardNetwork(this.network_architecture,
                                           get_activation_by_name(this.hidden_activation),
                                           get_activation_by_name(this.output_activation)
         )
@@ -67,37 +68,36 @@ class Paddle extends Individual{
         if (inputs !== null) {
             this.network.feed_forward(inputs);
         } else if (ball !== null) {
-            this.xPaddle = ball.xBall - 50;
+            this.yPaddle = ball.yBall - 45;
         }
         if (this.network.out === 0) {
-            this.xSpeed = -15;
+            this.ySpeed = -15;
         } else if (this.network.out === 1) {
-            this.xSpeed = 15;
+            this.ySpeed = 15;
         } else if (this.network.out === 2) {
-            this.xSpeed = 0;
+            this.ySpeed = 0;
         }
         return true;
     }
 
     move = () => {
-        this.xPaddle += this.xSpeed;
-        this.distance_travelled += Math.abs(this.xSpeed);
+        this.yPaddle += this.ySpeed;
+        this.distance_travelled += Math.abs(this.ySpeed);
     }
 
     draw = (p5, winner=false, champion=false) => {
-        // if (!this.is_alive) {
-        //     return;
-        // }
-        // if (champion) {
-        //     p5.fill('#00ff00');
-        //     p5.rect(this.xPaddle, this.yPaddle, 90, 15);
-        // } else if (winner) {
-        //     p5.fill('#00ff00');
-        //     p5.rect(this.xPaddle, this.yPaddle, 90, 15);
-        // } else {
-        p5.fill('#00ffff');
-        p5.rect(this.xPaddle, this.yPaddle, 90, 15);
-        // }
+        if (!this.is_alive) {
+            return;
+        } else if (champion) {
+            p5.fill('#00ff00');
+            p5.rect(this.xPaddle, this.yPaddle, 15, 90);
+        } else if (winner) {
+            p5.fill('#00ff00');
+            p5.rect(this.xPaddle, this.yPaddle, 15, 90);
+        } else {
+            p5.fill('#00ffff');
+            p5.rect(this.xPaddle, this.yPaddle, 15, 90);
+        }
     }
 }
 

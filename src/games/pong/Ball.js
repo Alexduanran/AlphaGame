@@ -13,24 +13,27 @@ class Ball {
     
 
     update = (paddle, boardSize) => {
-        this.distance_travelled += Math.abs(this.xSpeed);
+        this.distance_travelled += Math.abs(this.ySpeed);
 
-        if (this.xBall < 15) {
-            this.xSpeed *= -1;
-        }
-        else if (this.xBall > boardSize[0]-15) {
-            this.xSpeed *= -1;
-        }
-        else if (this.yBall < 35) {
+        if (this.yBall < 0) {
+            this.yBall = 0;
             this.ySpeed *= -1;
         }
-        else if (this.xBall > paddle.xPaddle && this.xBall < paddle.xBall && this.yLast < boardSize[1]-35 && this.yBall >= boardSize[1]-35) {
+        else if (this.yBall > boardSize[1]-20) {
+            this.yBall = boardSize[1]-20;
             this.ySpeed *= -1;
+        }
+        else if (this.xBall > boardSize[0]-35) {
+            this.xBall = boardSize[0]-35;
+            this.xSpeed *= -1;
+        }
+        else if (this.yBall > paddle.yPaddle-10 && this.yBall < paddle.yPaddle + 80 && this.xLast > 15 && this.xBall <= 15) {
+            this.xSpeed *= -1;
             paddle.hit += 1;
             paddle.distance_to_ball = 0;
         }
-        else if (this.yBall > boardSize[1]) {
-            this.ySpeed *= -1;
+        else if (this.xBall < 0) {
+            this.xSpeed *= -1;
             paddle.ball_travelled = this.distance_travelled;
             paddle.is_alive = false;
             paddle.distance_to_ball = Math.abs(this.xBall - paddle.xPaddle);
