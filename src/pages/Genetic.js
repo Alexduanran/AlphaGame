@@ -7,8 +7,8 @@ import {
     Link
 } from "react-router-dom";
 
-
 import Pong from '../games/pong/Pong';
+import SnakeEnv from '../games/snake/SnakeEnv';
 // import Game from './Game'
 
 function Genetic(props) {
@@ -32,8 +32,6 @@ function Genetic(props) {
         }
     }, [gameParentRef, plotParentRef]);
 
-
-
     return (
         <Router>
             <div className={css.container}>
@@ -44,7 +42,7 @@ function Genetic(props) {
                     <div className={css.gameScreen} ref={gameParentRef}>
                         <Switch>
                             <Route path='/snake'>
-                                snake
+                                Snake
                             </Route>
                             <Route path='/pong'>
                                 {
