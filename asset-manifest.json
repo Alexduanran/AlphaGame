@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/AlphaGame/static/css/main.99f8d44f.chunk.css",
-    "main.js": "/AlphaGame/static/js/main.6e6426f0.chunk.js",
-    "main.js.map": "/AlphaGame/static/js/main.6e6426f0.chunk.js.map",
+    "main.js": "/AlphaGame/static/js/main.ff05eab1.chunk.js",
+    "main.js.map": "/AlphaGame/static/js/main.ff05eab1.chunk.js.map",
     "runtime-main.js": "/AlphaGame/static/js/runtime-main.ee219749.js",
     "runtime-main.js.map": "/AlphaGame/static/js/runtime-main.ee219749.js.map",
     "static/css/2.7b0c6da6.chunk.css": "/AlphaGame/static/css/2.7b0c6da6.chunk.css",
@@ -30,6 +30,6 @@
     "static/css/2.7b0c6da6.chunk.css",
     "static/js/2.667c5da0.chunk.js",
     "static/css/main.99f8d44f.chunk.css",
-    "static/js/main.6e6426f0.chunk.js"
+    "static/js/main.ff05eab1.chunk.js"
   ]
 }
