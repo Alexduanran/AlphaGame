@@ -1,9 +1,10 @@
 .background {
     position: fixed;
-    height: 100vh;
-    left: 20%;
+    height: 95vh;
+    left: 25%;
     width: 100vh;
-    background-image: url('../media/2ds.png');
+    bottom: 5%;
+    background-image: url('../media/2ds_black.png');
     background-repeat: no-repeat;
     background-size: contain;
 }
@@ -14,12 +15,23 @@
     margin: 0 auto;
 }
 
+.footer {
+    position: fixed;
+    left: 40%;
+    right: 40%;
+    bottom: 1vw;
+    font-size: 0.8vw;
+    text-align: center;
+    color: white;
+}
+
 .gameScreen {
     position: absolute;
-    top: 6%;
-    left: 18%;
-    right: 19%;
-    bottom: 57%;
+    top: 5.4%;
+    left: 16.7%;
+    right: 22.7%;
+    bottom: 56.4%;
+    background-color: blueviolet;
 }
 
 .name {
@@ -27,16 +39,25 @@
     font-family: 'Press Start 2P', cursive;
     writing-mode: vertical-lr;
     transform:rotate(-180deg);
-    font-size: 8vh;
+    font-size: 9vh;
     text-align: right;
-    right: 80%;
+    right: 74%;
+}
+
+.text {
+    text-decoration: none;
+    color: red;
+}
+
+.text:active {
+    color: blueviolet;
 }
 
 .plotScreen {
     position: absolute;
     background-color: blueviolet;
-    top: 57%;
-    left: 24%;
-    right: 25%;
-    bottom: 5%;
+    top: 56.5%;
+    left: 22.4%;
+    right: 28.5%;
+    bottom: 4.8%;
 }

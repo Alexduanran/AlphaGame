@@ -15,7 +15,7 @@ const history = createBrowserHistory();
 
 function App() {
   return (
-    <div>
+    <div className={css.background}>
       <Router history={history}>
         <Switch>
           <Route path='/*/genetic'>
@@ -32,9 +32,6 @@ function App() {
           </Route>
         </Switch>
       </Router>
-      {/* <footer>
-        Copyright © 2020 AlphaGame
-      </footer> */}
     </div>
   );
 }

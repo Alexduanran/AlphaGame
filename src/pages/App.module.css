@@ -1,32 +1,3 @@
-.name {
-    writing-mode: vertical-lr;
-    transform:rotate(-180deg);
-    height: 100%;
-    text-align: center;
-    font-size: 800%;
-}
-
 .background {
-    background-image: url('../media/switch.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-
-.row{
-    display: flex;
-}
-
-@media only screen and (min-width: 768px){
-.colOne {flex-basis: 8.33%;} /* width works too */
-.colTwo {flex-basis: 16.66%;}
-.colThree {flex-basis: 25%;}
-.colFour {flex-basis: 33.33%;}
-.colFive {flex-basis: 41.66%;}
-.colSix {flex-basis: 50%;}
-.colSeven {flex-basis: 58.33%;}
-.colEight {flex-basis: 66.66%;}
-.colNine {flex-basis: 75%;}
-.colTen {flex-basis: 83.33%;}
-.colEleven {flex-basis: 91.66%;}
-.colTwelve {flex-basis: 100%;}
+    background-color: black;
 }

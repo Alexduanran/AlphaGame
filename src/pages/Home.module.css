@@ -1,9 +1,10 @@
 .background {
     position: fixed;
     height: 100vw;
+    top: 8.5vw;
     left: 10%;
     right: 10%;
-    background-image: url('../media/switch.png');
+    background-image: url('../media/switch_black.png');
     background-repeat: no-repeat;
     background-size: contain;
 }
@@ -12,50 +13,95 @@
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
+    background-color: black;
+}
+
+.footer {
+    position: fixed;
+    left: 40%;
+    right: 40%;
+    bottom: 1vw;
+    font-size: 0.8vw;
+    text-align: center;
+    color: white;
 }
 
 .grid {
     position: absolute;
     left: 25%;
     right: 25%;
-    top: 2.5%;
-    bottom: 5%;
+    top: 15%;
+    /* bottom: 5%; */
     display: grid;
     grid-template-columns: 40% 40%;
     grid-template-rows: 30% 30%;
     column-gap: 20%;
-    row-gap: 25%;
-    /* background-color: beige; */
+    row-gap: 30%;
+}
+
+.mode {
+    word-spacing: 1000px;
+}
+
+.mode::first-letter {
+    font-size: 140%;
 }
 
 .name {
-    font-size: 4vw;
+    position: fixed;
+    left: 15%;
+    right: 10%;
+    font-size: 5vw;
     font-family: 'Press Start 2P', cursive;
 }
 
 .smallsquare {
-    background-color: aquamarine;
+    background-color: white;
+    background-size: contain;
     width: 10vw;
     height: 10vw;
     justify-self: center;
+    border-radius: 20px;
+    opacity: 80%;
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    place-self: center;
+}
+
+.smallsquare:active {
+    width: 9.5vw;
+    height: 9.5vw;
 }
 
 .screen {
     position: absolute;
-    background-color: blueviolet;
-    top: 6%;
-    left: 22%;
-    right: 22%;
-    bottom: 69%;
+    top: 5.5%;
+    left: 21.1%;
+    right: 21.1%;
+    bottom: 68.6%;
+    background-size: cover;
 }
 
 .square {
-    background-color: aqua;
-    width: 16vw;
-    height: 16vw;
+    width: 14vw;
+    height: 14vw;
+    background-size: contain;
+    border-radius: 20px;
 }
 
 .swiper {
     position: absolute;
 }
 
+.swiperContainer {
+    top: 15%;
+}
+
+.text {
+    text-decoration: none;
+    color: red;
+}
+
+.text:active {
+    color: blueviolet;
+}
