@@ -62,7 +62,7 @@
     height: 10vw;
     justify-self: center;
     border-radius: 20px;
-    opacity: 0.8;
+    opacity: 0.8 !important;
     backdrop-filter: blur(4px);
     cursor: pointer;
     place-self: center;
