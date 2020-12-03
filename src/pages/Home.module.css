@@ -66,6 +66,7 @@
     backdrop-filter: blur(4px);
     cursor: pointer;
     place-self: center;
+    z-index: 100;
 }
 
 .smallsquare:active {
