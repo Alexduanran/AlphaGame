@@ -33,9 +33,9 @@ function Genetic(props) {
     }, [gameParentRef, plotParentRef]);
 
     return (
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
             <div className={css.container}>
-                <h1 className={css.name} onClick={()=>{props.history.push('/')}}>
+                <h1 className={css.name} onClick={()=>{props.history.push(process.env.PUBLIC_URL+'/')}}>
                     <Link to='/' className={css.text}>
                         AlphaGame
                     </Link>
@@ -43,29 +43,29 @@ function Genetic(props) {
                 <div className={css.background}>
                     <div className={css.gameScreen} ref={gameParentRef}>
                         <Switch>
-                            <Route path={process.env.PUBLIC_URL + '/snake'}>
+                            <Route path='/snake'>
                                 Snake
                             </Route>
-                            <Route path={process.env.PUBLIC_URL + '/pong'}>
+                            <Route path='/pong'>
                                 {
                                     gameScreenDimension.width === 0 ?
                                     <div></div> : <Pong dimension={[gameScreenDimension.width, gameScreenDimension.height]}/>
                                 }
                             </Route>
-                            <Route path={process.env.PUBLIC_URL + '/flappybird'}>
+                            <Route path='/flappybird'>
                                 flappybird
                             </Route>
                         </Switch>
                     </div>
                     <div className={css.plotScreen} ref={plotParentRef}>
                         <Switch>
-                            <Route path={process.env.PUBLIC_URL + '/snake'}>
+                            <Route path='/snake'>
                                 snake
                             </Route>
-                            <Route path={process.env.PUBLIC_URL + '/pong'}>
+                            <Route path='/pong'>
                                 pong
                             </Route>
-                            <Route path={process.env.PUBLIC_URL + '/flappybird'}>
+                            <Route path='/flappybird'>
                                 flappybird
                             </Route>
                         </Switch>

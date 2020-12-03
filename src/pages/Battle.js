@@ -8,9 +8,9 @@ import {
 
 function Battle(props) {
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
         <div className={css.container}>
-            <h1 className={css.name} onClick={()=>{props.history.push('/')}}>
+            <h1 className={css.name} onClick={()=>{props.history.push(process.env.PUBLIC_URL+'/')}}>
                 <Link to='/' className={css.text}>
                     AlphaGame
                 </Link>
@@ -18,26 +18,26 @@ function Battle(props) {
             <div className={css.background}>
                 <div className={css.gameScreen}>
                     <Switch>
-                        <Route path={process.env.PUBLIC_URL + '/snake'}>
+                        <Route path='/snake'>
                             snake
                         </Route>
-                        <Route path={process.env.PUBLIC_URL + '/pong'}>
+                        <Route path='/pong'>
                             pong
                         </Route>
-                        <Route path={process.env.PUBLIC_URL + '/flappybird'}>
+                        <Route path='/flappybird'>
                             flappybird
                         </Route>
                     </Switch>
                 </div>
                 <div className={css.plotScreen}>
                     <Switch>
-                        <Route path={process.env.PUBLIC_URL + '/snake'}>
+                        <Route path='/snake'>
                             snake
                         </Route>
-                        <Route path={process.env.PUBLIC_URL + '/pong'}>
+                        <Route path='/pong'>
                             pong
                         </Route>
-                        <Route path={process.env.PUBLIC_URL + '/flappybird'}>
+                        <Route path='/flappybird'>
                             flappybird
                         </Route>
                     </Switch>
