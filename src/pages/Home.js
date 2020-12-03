@@ -33,7 +33,7 @@ function Home(props) {
         return (
             <Swiper className={css.swiperContainer}
                     effect='coverflow'
-                    spaceBetween={25}
+                    spaceBetween={30}
                     slidesPerView={3}
                     dynamicBullets={true}
                     mousewheel={true}
@@ -81,20 +81,20 @@ function Home(props) {
         return (
             <div className={css.grid}>
                 <div className={css.smallpic} style={{backgroundImage:`url(${image})`}} />
-                <div className={css.smallsquare} onClick={()=>{props.history.push('/' + prop.name + '/genetic')}} >
+                <div className={css.smallsquare} onClick={()=>{console.log(process.env.PUBLIC_URL);props.history.push(process.env.PUBLIC_URL + '/' + prop.name + '/genetic')}} >
                     <h1 className={css.mode}>
                         Genetic
                         Algorithm
                     </h1>
                 </div>
-                <div className={css.smallsquare} onClick={()=>{props.history.push('/' + prop.name + '/reinforcement')}} >
+                <div className={css.smallsquare} onClick={()=>{props.history.push(process.env.PUBLIC_URL + '/' + prop.name + '/reinforcement')}} >
                     <h1 className={css.mode}>
                         Reinforce-
                         ment
                         Learning
                     </h1>
                 </div>
-                <div className={css.smallsquare} onClick={()=>{props.history.push('/' + prop.name + '/battle')}} >
+                <div className={css.smallsquare} onClick={()=>{props.history.push(process.env.PUBLIC_URL + '/' + prop.name + '/battle')}} >
                     <h1 className={css.mode}>
                         Human
                         vs.

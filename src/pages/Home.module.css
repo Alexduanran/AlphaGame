@@ -41,6 +41,7 @@
 .mode {
     word-spacing: 1000px;
     font-size: 1.8vw;
+    margin-left: 5%;
 }
 
 .mode::first-letter {
@@ -79,7 +80,7 @@
     place-self: center;
 }
 
-.smallsquare:active {
+.smallsquare:hover {
     width: 9.5vw;
     height: 9.5vw;
 }
