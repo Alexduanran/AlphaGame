@@ -31,7 +31,6 @@
     left: 25%;
     right: 25%;
     top: 15%;
-    /* bottom: 5%; */
     display: grid;
     grid-template-columns: 40% 40%;
     grid-template-rows: 30% 30%;
@@ -41,6 +40,7 @@
 
 .mode {
     word-spacing: 1000px;
+    font-size: 1.8vw;
 }
 
 .mode::first-letter {
@@ -62,7 +62,7 @@
     height: 10vw;
     justify-self: center;
     border-radius: 20px;
-    opacity: 80%;
+    opacity: 0.8;
     backdrop-filter: blur(4px);
     cursor: pointer;
     place-self: center;
@@ -100,7 +100,7 @@
 
 .text {
     text-decoration: none;
-    color: red;
+    color: crimson;
 }
 
 .text:active {
