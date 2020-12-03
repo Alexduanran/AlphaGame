@@ -18,26 +18,26 @@ function Battle(props) {
             <div className={css.background}>
                 <div className={css.gameScreen}>
                     <Switch>
-                        <Route path='/snake'>
+                        <Route path={process.env.PUBLIC_URL + '/snake'}>
                             snake
                         </Route>
-                        <Route path='/pong'>
+                        <Route path={process.env.PUBLIC_URL + '/pong'}>
                             pong
                         </Route>
-                        <Route path='/flappybird'>
+                        <Route path={process.env.PUBLIC_URL + '/flappybird'}>
                             flappybird
                         </Route>
                     </Switch>
                 </div>
                 <div className={css.plotScreen}>
                     <Switch>
-                        <Route path='/snake'>
+                        <Route path={process.env.PUBLIC_URL + '/snake'}>
                             snake
                         </Route>
-                        <Route path='/pong'>
+                        <Route path={process.env.PUBLIC_URL + '/pong'}>
                             pong
                         </Route>
-                        <Route path='/flappybird'>
+                        <Route path={process.env.PUBLIC_URL + '/flappybird'}>
                             flappybird
                         </Route>
                     </Switch>

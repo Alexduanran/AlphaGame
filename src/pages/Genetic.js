@@ -43,29 +43,29 @@ function Genetic(props) {
                 <div className={css.background}>
                     <div className={css.gameScreen} ref={gameParentRef}>
                         <Switch>
-                            <Route path='/snake'>
+                            <Route path={process.env.PUBLIC_URL + '/snake'}>
                                 Snake
                             </Route>
-                            <Route path='/pong'>
+                            <Route path={process.env.PUBLIC_URL + '/pong'}>
                                 {
                                     gameScreenDimension.width === 0 ?
                                     <div></div> : <Pong dimension={[gameScreenDimension.width, gameScreenDimension.height]}/>
                                 }
                             </Route>
-                            <Route path='/flappybird'>
+                            <Route path={process.env.PUBLIC_URL + '/flappybird'}>
                                 flappybird
                             </Route>
                         </Switch>
                     </div>
                     <div className={css.plotScreen} ref={plotParentRef}>
                         <Switch>
-                            <Route path='/snake'>
+                            <Route path={process.env.PUBLIC_URL + '/snake'}>
                                 snake
                             </Route>
-                            <Route path='/pong'>
+                            <Route path={process.env.PUBLIC_URL + '/pong'}>
                                 pong
                             </Route>
-                            <Route path='/flappybird'>
+                            <Route path={process.env.PUBLIC_URL + '/flappybird'}>
                                 flappybird
                             </Route>
                         </Switch>
