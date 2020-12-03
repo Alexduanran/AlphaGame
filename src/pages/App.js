@@ -16,7 +16,7 @@ const history = createBrowserHistory();
 function App() {
   return (
     <div className={css.background}>
-      <Router history={history}>
+      <Router history={history} path={process.env.PUBLIC_URL}>
         <Switch>
           <Route path='/*/genetic'>
             <Genetic history={history}/>

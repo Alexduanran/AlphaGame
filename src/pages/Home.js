@@ -111,7 +111,7 @@ function Home(props) {
     }
 
     return (
-        <Router>
+        <Router path={process.env.PUBLIC_URL}>
             <div className={css.container}>
                 <h1 className={css.name}>
                     <Link to='/' className={css.text}>
