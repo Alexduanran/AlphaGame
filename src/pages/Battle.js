@@ -32,7 +32,11 @@ function Battle(props) {
                 <div className={css.plotScreen}>
                     <Switch>
                         <Route path='/snake'>
-                            snake
+                            {/* {
+                                gameScreenDimension.width === 0 ?
+                                <div></div> : 
+                                <SnakeEnv dimension={[gameScreenDimension.width, gameScreenDimension.height]}/>
+                            } */}
                         </Route>
                         <Route path='/pong'>
                             pong

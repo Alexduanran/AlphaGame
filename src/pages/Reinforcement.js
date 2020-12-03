@@ -42,9 +42,15 @@ function Reinforcement(props) {
                     <div className={css.gameScreen} ref={gameParentRef}>
                         <Switch>
                             <Route path='/snake'>
+                                {/* define env_params as a props.attribute if necessary */}
                                 {
                                     gameScreenDimension.width === 0 ?
-                                    <div></div> : <SnakeEnv dimension={[gameScreenDimension.width, gameScreenDimension.height]}/>
+                                    <div></div> : <SnakeEnv 
+                                        doManual={false} 
+                                        doTrain={true} 
+                                        doTest={false} 
+                                        dimension={[gameScreenDimension.width, gameScreenDimension.height]}
+                                    />
                                 }
                             </Route>
                             <Route path='/pong'>

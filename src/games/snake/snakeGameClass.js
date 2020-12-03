@@ -9,7 +9,7 @@ import * as tf from '@tensorflow/tfjs';
 // var tf = require("tensorflowjs");
 import {Snake, Apple} from "./snakeClass";
 import {colorGrid, Rect} from "./sprite"
-import {generateExtraWalls, getRandInt, arrayEqual, euclidean} from "./util";
+import {generateExtraWalls, getRandInt, arrayEqual, arrayContains, euclidean} from "./util";
 
 
 export class snakeGame {
@@ -192,9 +192,26 @@ export class snakeGame {
         this.done = 0;
         this.score = 0;
 
+        // initialize snake head
+        var rand_x, rand_y, avoid, inAvoid;
+        const avoidCompare = (a, b) => arrayEqual(a, b);
+        if (this.extraWalls == null) {
+            avoid = null;
+        } else {
+            avoid = this.extraWalls.map(rect => [rect.x, rect.y]);
+        }
+        while (true) {
+            rand_x = getRandInt(5*this.gridSize, this.width-5*this.gridSize, this.gridSize);
+            rand_y = getRandInt(5*this.gridSize, this.width-5*this.gridSize, this.gridSize);
+            inAvoid = arrayContains(avoid, [rand_x,rand_y], avoidCompare);
+            console.log(inAvoid);
+            if (avoid == null || !(inAvoid)){
+                break;
+            }
+        }
+
         this.snake = new Snake(
-            getRandInt(5*this.gridSize, this.width-5*this.gridSize, this.gridSize),
-            getRandInt(5*this.gridSize, this.width-5*this.gridSize, this.gridSize),
+            rand_x, rand_y,
             this.snakeLength, this._direction(getRandInt(0,4)), this.gridSize,
             this.width, this.height
         );

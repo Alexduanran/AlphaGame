@@ -136,7 +136,4 @@ export class Agent {
     async load_model(fname) {
         this.model = await tf.loadLayersModel("localstorage://" + fname);
     }
-
-
-
 }
