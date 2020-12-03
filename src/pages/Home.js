@@ -80,12 +80,7 @@ function Home(props) {
         }
         return (
             <div className={css.grid}>
-                <div className={css.smallsquare} style={{backgroundImage:`url(${image})`,
-                                                         opacity:'100%',
-                                                         borderStyle:'solid',
-                                                         borderColor:'white',
-                                                         cursor:'default'}}>
-                </div>
+                <div className={css.smallpic} style={{backgroundImage:`url(${image})`}} />
                 <div className={css.smallsquare} onClick={()=>{props.history.push('/' + prop.name + '/genetic')}} >
                     <h1 className={css.mode}>
                         Genetic

@@ -55,6 +55,17 @@
     font-family: 'Press Start 2P', cursive;
 }
 
+.smallpic {
+    background-size: contain;
+    width: 10vw;
+    height: 10vw;
+    justify-self: center;
+    border-radius: 20px;
+    place-self: center;
+    border-style: solid;
+    border-color: white;
+}
+
 .smallsquare {
     background-color: white;
     background-size: contain;
@@ -66,7 +77,6 @@
     backdrop-filter: blur(4px);
     cursor: pointer;
     place-self: center;
-    z-index: 100;
 }
 
 .smallsquare:active {
