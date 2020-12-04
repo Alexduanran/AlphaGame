@@ -9,6 +9,7 @@ import {
 
 import Pong from '../games/pong/Pong';
 import SnakeEnv from '../games/snake/SnakeEnv';
+import Flappy from '../games/flappy_bird/Flappy';
 // import Game from './Game'
 
 function Genetic(props) {
@@ -53,7 +54,10 @@ function Genetic(props) {
                                 }
                             </Route>
                             <Route path='/flappybird'>
-                                flappybird
+                                {
+                                    gameScreenDimension.width === 0 ?
+                                    <div></div> : <Flappy dimension={[gameScreenDimension.width, gameScreenDimension.height]}/>
+                                }
                             </Route>
                         </Switch>
                     </div>
