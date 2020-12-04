@@ -64,6 +64,10 @@ function Pong(props) {
  
     const draw = (p5) => {
         p5.background(0);
+        p5.textSize(20);
+        p5.text('Generation: '+current_generation, board_size[0]-180, 30);
+        p5.text('Hit: '+num_hit, board_size[0]-180, 60);
+        p5.text('Best: '+best_hit, board_size[0]-180, 90);
         // New set of balls
         if (newball) {
             balls = [];
@@ -90,10 +94,10 @@ function Pong(props) {
             if (paddle.is_alive) {
                 still_alive++;
                 //----------------------------------------inputs for neural network--------------------------------------------
-                const distance = ((balls[i].y - paddle.y_pos) ** 2 + (balls[i].x - paddle.x_pos) ** 2) ** 0.5;
-                const ball_distance_left_wall = balls[i].yBall - 0;
-                const ball_distance_right_wall = board_size[1] - balls[i].yBall;
-                const inputs = [[paddle.yPaddle], [ball_distance_left_wall], [ball_distance_right_wall], [balls[i].ySpeed], [paddle.ySpeed], [balls[i].xBall], [balls[i].xSpeed]];
+                // const distance = ((balls[i].y - paddle.y_pos) ** 2 + (balls[i].x - paddle.x_pos) ** 2) ** 0.5;
+                // const ball_distance_left_wall = balls[i].yBall - 0;
+                // const ball_distance_right_wall = board_size[1] - balls[i].yBall;
+                const inputs = [[paddle.yPaddle], [balls[i].ySpeed], [paddle.ySpeed], [balls[i].yBall], [balls[i].xSpeed]];
                 // inputs = np.array([[paddle.x_pos], [balls[i].xspeed], [paddle.xspeed], [balls[i].x]])
                 //----------------------------------------inputs for neural network--------------------------------------------
                 paddle.update(inputs);

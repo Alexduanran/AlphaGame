@@ -26,7 +26,7 @@ class Paddle extends Individual{
         // Each "Vision" has 3 distances it tracks: wall, apple and self
         // there are also one-hot encoded direction and one-hot encoded tail direction,
         // each of which have 4 possibilities.
-        const num_inputs = 7  
+        const num_inputs = 5  
         this.network_architecture = [num_inputs]                          // Inputs
         this.network_architecture.push(...this.hidden_layer_architecture)  // Hidden layers
         this.network_architecture.push(3)                               // 3 outputs, ['left', 'still', 'right']
