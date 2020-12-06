@@ -7,6 +7,7 @@ import {
     Link
 } from "react-router-dom";
 
+import GeneticParams from './GeneticParams';
 import Pong from '../games/pong/Pong';
 import SnakeEnv from '../games/snake/SnakeEnv';
 // import Game from './Game'
@@ -16,6 +17,14 @@ function Genetic(props) {
     const plotParentRef = useRef(null);
     const [gameScreenDimension, setGameScreenDimension] = useState({width: 0, height: 0});
     const [plotScreenDimension, setPlotScreenDimension] = useState({width: 0, height: 0});
+    const [settings, setSettings] = useState({
+                                    'hiddenLayerArchitecture': null,
+                                    'mutationRate': null,
+                                    'mutationRateType': null,
+                                    'numParents': null,
+                                    'numOffsprings': null
+                                    })
+    const [start, setStart] = useState(false);
 
     useEffect ( () => {
         if (gameParentRef.current) {
@@ -32,6 +41,22 @@ function Genetic(props) {
         }
     }, [gameParentRef, plotParentRef]);
 
+    const updateSettings = (hiddenLayerArchitecture, 
+                            mutationRate, 
+                            mutationRateType,
+                            numParents,
+                            numOffsprings) => {
+        setSettings({'hiddenLayerArchitecture': hiddenLayerArchitecture,
+                    'mutationRate': mutationRate,
+                    'mutationRateType': mutationRateType,
+                    'numParents': numParents,
+                    'numOffsprings': numOffsprings})
+    }
+
+    const updateStart = () => {
+        setStart(!start);
+    }
+
     return (
         <Router basename={process.env.PUBLIC_URL}>
             <div className={css.container}>
@@ -42,20 +67,35 @@ function Genetic(props) {
                 </h1>
                 <div className={css.background}>
                     <div className={css.gameScreen} ref={gameParentRef}>
-                        <Switch>
-                            <Route path='/snake'>
-                                Snake
-                            </Route>
-                            <Route path='/pong'>
-                                {
-                                    gameScreenDimension.width === 0 ?
-                                    <div></div> : <Pong dimension={[gameScreenDimension.width, gameScreenDimension.height]}/>
-                                }
-                            </Route>
-                            <Route path='/flappybird'>
-                                flappybird
-                            </Route>
-                        </Switch>
+                        {
+                            !start ?
+                            <GeneticParams updateSettings={updateSettings} updateStart={updateStart}/>
+                            :
+                            <Switch>
+                                <Route path='/snake'>
+                                    {/* {
+                                        gameScreenDimension.width === 0 ?
+                                        <div></div> : <Snake dimension={[gameScreenDimension.width, gameScreenDimension.height]}
+                                                            settings={settings}/>
+                                    } */}
+                                </Route>
+                                <Route path='/pong'>
+                                    {
+                                        gameScreenDimension.width === 0 ?
+                                        <div></div> : <Pong dimension={[gameScreenDimension.width, gameScreenDimension.height]}
+                                                            settings={settings}
+                                                            updateStart={updateStart}/>
+                                    }
+                                </Route>
+                                <Route path='/flappybird'>
+                                    {/* {
+                                        gameScreenDimension.width === 0 ?
+                                        <div></div> : <FlappyBird dimension={[gameScreenDimension.width, gameScreenDimension.height]}
+                                                            settings={settings}/>
+                                    } */}
+                                </Route>
+                            </Switch>
+                        }
                     </div>
                     <div className={css.plotScreen} ref={plotParentRef}>
                         <Switch>
@@ -72,7 +112,7 @@ function Genetic(props) {
                     </div>
                 </div>
             </div>
-            <footer className={css.footer}>
+            <footer>
                 Copyright © 2020 AlphaGame | 
                 <a href='https://github.com/Alexduanran/AlphaGame' target='_blank' style={{textDecoration: 'none', color:'white'}}> Github</a>
             </footer>

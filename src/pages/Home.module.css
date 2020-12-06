@@ -16,7 +16,7 @@
     background-color: black;
 }
 
-.footer {
+footer {
     position: fixed;
     left: 40%;
     right: 40%;
@@ -50,6 +50,7 @@
 
 .name {
     position: fixed;
+    top: 2vw;
     left: 15%;
     right: 10%;
     font-size: 5vw;
@@ -110,7 +111,11 @@
 }
 
 .text {
-    text-decoration: none;
+    text-decoration: none !important;
+    color: crimson;
+}
+
+.text:hover {
     color: crimson;
 }
 

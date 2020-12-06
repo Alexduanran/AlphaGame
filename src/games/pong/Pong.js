@@ -17,19 +17,18 @@ function Pong(props) {
     var _crossover_bins = [settings['probability_SBX'], settings['probability_SPBX']].map(cumulativeSum);
     var _SPBX_type = settings['SPBX_type'].toLowerCase();
     var _SBX_eta = settings['SBX_eta'];
-    var _mutation_rate = settings['mutation_rate'];
+    var _mutation_rate = props.settings['mutationRate'];
 
     // Determine size of next gen based off selection type
     var _next_gen_size = null;
     if (settings['selection_type'].toLowerCase() == 'plus')
-        _next_gen_size = settings['num_parents'] + settings['num_offspring'];
+        _next_gen_size = props.settings['numParents'] + props.settings['numOffsprings'];
     else if (settings['selection_type'].lower() == 'comma')
-        _next_gen_size = settings['num_offspring'];
+        _next_gen_size = props.settings['numOffsprings'];
     else
-        throw new Error('Selection type "{}" is invalid'.format(settings['selection_type']));
+        throw new Error('Selection type "{}" is invalid'.format(settings['selectionType']));
 
     var board_size = props.dimension;
-    console.log(board_size)
 
     var individuals = [];
     var balls = [];
@@ -53,18 +52,23 @@ function Pong(props) {
         // (without that p5 will render the canvas outside of your component)
         p5.createCanvas(board_size[0], board_size[1]).parent(canvasParentRef);
         training_paddle = new Paddle(p5, board_size[0]-15, board_size[1]/2-45, 0, board_size);
-        for (var i=0; i < settings['num_parents']; i++) {
+        for (var i=0; i < props.settings['numParents']; i++) {
             const individual = new Paddle(p5, 0, board_size[1]/2-45, 0, board_size, null,
-                                    settings['hidden_network_architecture'], 
+                                    props.settings['hiddenLayerArchitecture'], 
                                     settings['hidden_layer_activation', 
                                     settings['output_activation']]);
             individuals.push(individual);
         }
+        const button = p5.createButton('Return').parent(canvasParentRef);
+        button.position(30, 10);
+        button.style('background-color', '#8A2BE2')
+        button.mousePressed(props.updateStart);
     };
  
     const draw = (p5) => {
         p5.background(0);
         p5.textSize(20);
+        p5.fill('#8A2BE2');
         p5.text('Generation: '+current_generation, board_size[0]-180, 30);
         p5.text('Hit: '+num_hit, board_size[0]-180, 60);
         p5.text('Best: '+best_hit, board_size[0]-180, 90);
@@ -157,7 +161,7 @@ function Pong(props) {
         // print('----Best Score:', self.population.fittest_individual.score);
         console.log('----Average fitness:', population.average_fitness());
         
-        population.individuals = elitism_selection(population, settings['num_parents']);
+        population.individuals = elitism_selection(population, props.settings['numParents']);
         population.individuals = shuffle(population.individuals);
         var next_pop = [];
 
@@ -214,11 +218,11 @@ function Pong(props) {
 
             // Create children from chromosomes generated above
             var c1 = new Paddle(p5, 0, board_size[1]/2-45, 0, board_size, c1_params,
-                        settings['hidden_network_architecture'], 
+                        props.settings['hiddenLayerArchitecture'], 
                         settings['hidden_layer_activation', 
                         settings['output_activation']]);
             var c2 = new Paddle(p5, 0, board_size[1]/2-45, 0, board_size, c2_params,
-                        settings['hidden_network_architecture'], 
+                        props.settings['hiddenLayerArchitecture'], 
                         settings['hidden_layer_activation', 
                         settings['output_activation']]);
 
@@ -270,7 +274,7 @@ function Pong(props) {
         }
 
         var mutation_rate = _mutation_rate;
-        if (settings['mutation_rate_type'].toLowerCase() === 'decaying')
+        if (props.settings['mutationRateType'].toLowerCase() === 'decaying')
             mutation_rate = mutation_rate / Math.sqrt(current_generation + 1);
         
         if (mutation_bucket === 0) {

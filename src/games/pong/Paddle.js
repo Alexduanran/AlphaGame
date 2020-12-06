@@ -95,7 +95,7 @@ class Paddle extends Individual{
             p5.fill('#00ff00');
             p5.rect(this.xPaddle, this.yPaddle, 15, 90);
         } else {
-            p5.fill('#00ffff');
+            p5.fill('#8A2BE2');
             p5.rect(this.xPaddle, this.yPaddle, 15, 90);
         }
     }

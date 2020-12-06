@@ -10,6 +10,7 @@ import {
   Link
 } from "react-router-dom";
 import { createBrowserHistory } from 'history';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const history = createBrowserHistory();
 

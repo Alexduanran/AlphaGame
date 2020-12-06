@@ -15,7 +15,7 @@
     margin: 0 auto;
 }
 
-.footer {
+footer {
     position: fixed;
     left: 40%;
     right: 40%;
@@ -45,7 +45,11 @@
 }
 
 .text {
-    text-decoration: none;
+    text-decoration: none !important;
+    color: crimson;
+}
+
+.text:hover {
     color: crimson;
 }
 

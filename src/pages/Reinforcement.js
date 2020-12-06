@@ -76,7 +76,7 @@ function Reinforcement(props) {
                     </div>
                 </div>
             </div>
-            <footer className={css.footer}>
+            <footer>
                 Copyright © 2020 AlphaGame | 
                 <a href='https://github.com/Alexduanran/AlphaGame' target='_blank' style={{textDecoration: 'none', color:'white'}}> Github</a>
             </footer>
