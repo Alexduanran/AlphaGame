@@ -11,6 +11,7 @@ import GeneticParams from './GeneticParams';
 import Plot from './Plot';
 import Pong from '../games/pong/Pong';
 import SnakeEnv from '../games/snake/SnakeEnv';
+import Flappy from '../games/flappy_bird/Flappy';
 // import Game from './Game'
 
 function Genetic(props) {
@@ -103,11 +104,14 @@ function Genetic(props) {
                                     }
                                 </Route>
                                 <Route path='/flappybird'>
-                                    {/* {
+                                    {
                                         gameScreenDimension.width === 0 ?
-                                        <div></div> : <FlappyBird dimension={[gameScreenDimension.width, gameScreenDimension.height]}
-                                                            settings={settings}/>
-                                    } */}
+                                        <div></div> : <Flappy dimension={[gameScreenDimension.width, gameScreenDimension.height]}
+                                                            settings={settings}
+                                                            updateStart={updateStart}
+                                                            addAvgFitness={addAvgFitness}
+                                                            addMaxFitness={addMaxFitness}/>
+                                    }
                                 </Route>
                             </Switch>
                         }
@@ -126,7 +130,12 @@ function Genetic(props) {
                                 }
                             </Route>
                             <Route path='/flappybird'>
-                                flappybird
+                                {
+                                    plotScreenDimension.width === 0 ?
+                                    <div></div> : <Plot dimension={[plotScreenDimension.width, plotScreenDimension.height]}
+                                                        avgFitness={avgFitness}
+                                                        maxFitness={maxFitness}/>
+                                }
                             </Route>
                         </Switch>
                     </div>
