@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 
 import GeneticParams from './GeneticParams';
+import Plot from './Plot';
 import Pong from '../games/pong/Pong';
 import SnakeEnv from '../games/snake/SnakeEnv';
 // import Game from './Game'
@@ -25,6 +26,16 @@ function Genetic(props) {
                                     'numOffsprings': null
                                     })
     const [start, setStart] = useState(false);
+    const [avgFitness, setAvgFitness] = useState([[0,1000]]);
+    const [maxFitness, setMaxFitness] = useState([[0,1000]]);
+
+    const addAvgFitness = (avgFitness_) => {
+        setAvgFitness(avgFitness => [...avgFitness, [avgFitness.length, avgFitness_]]);
+    } 
+
+    const addMaxFitness = (maxFitness_) => {
+        setMaxFitness(maxFitness => [...maxFitness, [maxFitness.length, maxFitness_]]);
+    }
 
     useEffect ( () => {
         if (gameParentRef.current) {
@@ -55,6 +66,8 @@ function Genetic(props) {
 
     const updateStart = () => {
         setStart(!start);
+        setAvgFitness([]);
+        setMaxFitness([]);
     }
 
     return (
@@ -84,7 +97,9 @@ function Genetic(props) {
                                         gameScreenDimension.width === 0 ?
                                         <div></div> : <Pong dimension={[gameScreenDimension.width, gameScreenDimension.height]}
                                                             settings={settings}
-                                                            updateStart={updateStart}/>
+                                                            updateStart={updateStart}
+                                                            addAvgFitness={addAvgFitness}
+                                                            addMaxFitness={addMaxFitness}/>
                                     }
                                 </Route>
                                 <Route path='/flappybird'>
@@ -103,7 +118,12 @@ function Genetic(props) {
                                 snake
                             </Route>
                             <Route path='/pong'>
-                                pong
+                                {
+                                    plotScreenDimension.width === 0 ?
+                                    <div></div> : <Plot dimension={[plotScreenDimension.width, plotScreenDimension.height]}
+                                                        avgFitness={avgFitness}
+                                                        maxFitness={maxFitness}/>
+                                }
                             </Route>
                             <Route path='/flappybird'>
                                 flappybird

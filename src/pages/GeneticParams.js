@@ -10,7 +10,7 @@ function GeneticParams(props) {
     const [numOffsprings, setNumOffsprings] = useState(100);
 
     return (
-        <div style={{position:'absolute', top:'2.5%', width:'100%'}}>
+        <div style={{position:'absolute', top:'2.5%', bottom:'0px', left:'0px', right:'0px'}}>
             <Form>
                 <Form.Group as={Row}>
                     <Form.Label column sm='5' style={{color:'white', left:'4%'}}>

@@ -1,3 +1,4 @@
+import React from 'react';
 import Sketch from 'react-p5';
 import Paddle from './Paddle';
 import Ball from './Ball';
@@ -160,6 +161,9 @@ function Pong(props) {
         console.log('----Max fitness:', population.fittest_individual().fitness);
         // print('----Best Score:', self.population.fittest_individual.score);
         console.log('----Average fitness:', population.average_fitness());
+
+        props.addAvgFitness(population.average_fitness());
+        props.addMaxFitness(population.fittest_individual().fitness);
         
         population.individuals = elitism_selection(population, props.settings['numParents']);
         population.individuals = shuffle(population.individuals);
@@ -329,4 +333,4 @@ function Pong(props) {
     );
 }
 
-export default Pong;
+export default React.memo(Pong, (prevProps, nextProps) => {return true});
