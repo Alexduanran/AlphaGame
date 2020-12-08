@@ -1,3 +1,5 @@
+import settings from './settings';
+
 const random = require('random');
 
 class Pipe {
@@ -44,7 +46,10 @@ class Pipe {
     collide = (x_pos, y_pos, target_sprite) => {
         const target_hwidth = target_sprite.width / 2 
         const target_hheight = target_sprite.height / 2
-        if (x_pos >= this.left_x()-target_hwidth && x_pos <= this.right_x()+target_hwidth && y_pos >= this.top_y()-target_hheight && y_pos <= this.bottom_y()+target_hheight) {
+        if (x_pos >= this.left_x()-target_hwidth 
+            && x_pos <= this.right_x()+target_hwidth 
+            && y_pos >= this.top_y()-target_hheight 
+            && y_pos <= this.bottom_y()+target_hheight) {
             // (x_pos,y_pos) is within the pipe with added padding of half of the width and height of the target_sprite on all 4 sides --> collision
             return true
         }
@@ -54,23 +59,39 @@ class Pipe {
     draw = (p5, pipe_sprite) => {
         p5.push()
         // translate(this.x_pos - this.size / 2 - 8 + birdSprite.width / 2, this.y_pos - this.size / 2 + birdSprite.height / 2);
-        p5.translate(this.left_x(), this.top_y());
-        if (!this.isBottom) 
+
+        if (!this.isBottom) {
+            p5.translate(this.left_x() + pipe_sprite.width, this.bottom_y());
             p5.rotate(Math.PI)
-        p5.image(pipe_sprite, -pipe_sprite.width / 2, -pipe_sprite.height / 2)
+        } else {
+            p5.translate(this.left_x(), this.top_y());
+        }
+        // p5.image(pipe_sprite, -pipe_sprite.width / 2, -pipe_sprite.height / 2)
+        p5.image(pipe_sprite, 0, 0)
+
+        // p5.image(pipe_sprite, 100, 100, 100, 100)
         p5.pop()
     }
 
     static create_pipe_pair = (Window_Width, height, width) => {
         // random_pipe_pos = random.choice([400, 500, 600, 700, 800])
-        const random_pipe_pos = Math.floor(Math.random()*5)*100 + 400
-        // const bottom_pipe = self.pipe_surface.get_rect(midtop = (self.Window_Width + 100, random_pipe_pos))
-        // const top_pipe = self.pipe_surface.get_rect(midbottom = (self.Window_Width + 100, random_pipe_pos - 300))
-        const bottom_pipe = new Pipe(true, Window_Width + 100, random_pipe_pos, height, width)
-        const top_pipe = new Pipe(false, Window_Width + 100, random_pipe_pos - 300, height, width)
+        const random_pipe_pos = Math.floor(Math.random()*5)*25 + 120
+
+
+        const bottom_pipe = new Pipe(true, Window_Width + settings['pipe_interval_in_pixels'], random_pipe_pos, height, width)
+        const top_pipe = new Pipe(false, Window_Width + settings['pipe_interval_in_pixels'], random_pipe_pos - 100, height, width)
         console.log("Generating new pipe pair")
         console.log([bottom_pipe, top_pipe])
         return [bottom_pipe, top_pipe]
+
+
+        // const bottom_pipe = new Pipe(true, Window_Width + 200, 200, height, width)
+        // const top_pipe = new Pipe(false, Window_Width + 200, 100, height, width)
+        // console.log("Generating new pipe pair")
+        // console.log(bottom_pipe.x, bottom_pipe.y, bottom_pipe.left_x(), bottom_pipe.top_y())
+        // console.log(top_pipe.x, top_pipe.y, top_pipe.left_x(), top_pipe.bottom_y())
+        // return [bottom_pipe, top_pipe]
+
     }
 }
 

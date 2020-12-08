@@ -1,15 +1,17 @@
 const settings = {
     // #### Flappy Bird related ####
 
-    'Window_Width':                 576,
-    'Window_Height':                1024,
+    'Window_Width':                 600,//576,
+    'Window_Height':                300,//1024,
     'gravity':                      0.25,
 
-    'init_bird_x_pos':              10,
-    'init_bird_y_pos':              25,
+    'init_bird_x_pos':              50,
+    'init_bird_y_pos':              55,
 
-    'bird_jump_speed':              -10,
-    'pipe_interval_in_frames':      30,//#72,
+    'bird_jump_speed':              -4,
+    'pipe_interval_in_frames':      30,//#72, // not in use
+
+    'pipe_interval_in_pixels':      300,
 
 
 
@@ -20,7 +22,9 @@ const settings = {
     // # Output layer activation is specific to the output layer 
     'output_layer_activation':     'sigmoid',  //# Options are [relu, sigmoid, tanh, linear, leaky_relu]
     // # Hidden network architecture describes the number of nodes in each hidden layer
-    'hidden_network_architecture': [12, 20, 12],   //# A list containing number of nodes in each hidden layer
+
+    // 'hidden_network_architecture': [12, 20, 12],   //# A list containing number of nodes in each hidden layer
+    'hidden_network_architecture': [6,3],
 
     // #### GA stuff ####
 

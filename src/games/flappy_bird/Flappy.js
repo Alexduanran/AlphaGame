@@ -9,6 +9,12 @@ import {gaussian_mutation, random_uniform_mutation} from '../genetic_algorithm/m
 import {simulated_binary_crossover as SBX} from '../genetic_algorithm/crossover';
 import {uniform_binary_crossover, single_point_binary_crossover} from '../genetic_algorithm/crossover';
 import { image } from '@tensorflow/tfjs';
+
+// import background_sprite_import from "./assets/background-day.png"
+import background_sprite_import from "./assets/background-day_horizontal.png"
+import base_sprite_imoprt from "./assets/base.png"
+import pipe_sprite_import from "./assets/pipe-green.png"
+
 const random = require('random');
 var nj = require('@aas395/numjs');
 
@@ -32,9 +38,11 @@ function Flappy(props) {
 
     var board_size = props.dimension;
     // console.log(board_size)
-    var Window_Width = settings['Window_Width']
-    var Window_Height = settings['Window_Height']
-    console.log((Window_Width, Window_Height))
+    // var Window_Width = settings['Window_Width']
+    // var Window_Height = settings['Window_Height']
+    var Window_Width = props.dimension[0]   
+    var Window_Height = props.dimension[1]  
+    console.log(Window_Width, Window_Height)        //493 – 295
 
     var individuals = [];
 
@@ -75,15 +83,15 @@ function Flappy(props) {
         console.log('=================Flappy setup==========================');
         console.log('=================Flappy setup==========================');
 
-        bg_sprite = p5.loadImage("./assets/background-day.png")
-        bg_sprite = p5.loadImage("background-day.png")
-        floor_sprite = p5.loadImage("./assets/base.png")
-        pipe_sprite = p5.loadImage("./assets/pipe-green.png")
+        bg_sprite = p5.loadImage(background_sprite_import)
+        floor_sprite = p5.loadImage(base_sprite_imoprt)
+        pipe_sprite = p5.loadImage(pipe_sprite_import)
 
 
-        var temp = Pipe.create_pipe_pair(Window_Width, pipe_sprite.height, pipe_sprite.height)
-        pipe_list.push(temp[0])
-        pipe_list.push(temp[1])
+        // var temp = Pipe.create_pipe_pair(Window_Width, pipe_sprite.height, pipe_sprite.width)
+        // pipe_list.push(temp[0])
+        // pipe_list.push(temp[1])
+        // pipe_list.push(...Pipe.create_pipe_pair(Window_Width, pipe_sprite.height, pipe_sprite.width))
         // pipe_list.push.apply(Pipe.create_pipe_pair(Window_Width))
         
         console.log(pipe_list)
@@ -113,64 +121,66 @@ function Flappy(props) {
     
     const draw = (p5) => {
         p5.background(99);
+        // p5.push()
+        // p5.fill('#00ff00');
+        // p5.rect(10, 10, 15, 90);
+        // p5.pop()
+        
         p5.push()
-        p5.fill('#00ff00');
-        p5.rect(10, 10, 15, 90);
-        p5.pop()
-        bg_sprite = p5.loadImage("./assets/background-day.png")
-        bg_sprite = p5.loadImage("background-day.png")
-        console.log(bg_sprite)
-        p5.push()
-        p5.scale(100)
+        p5.scale(1.75)
         p5.image(bg_sprite, 0, 0);
         p5.pop()
 
         // # Pipes
         spawn_pipe_counter += 1
         
-        // # if self.spawn_pipe_counter % 72 == 0:
-        if (spawn_pipe_counter % settings['pipe_interval_in_frames'] == 0) {
-            // pipe_list.extend(create_pipe())
-            // console.log("======================================GENERATING PIPE START=================================================================")
-            // console.log(spawn_pipe_counter, pipe_sprite.height, pipe_sprite.height)
-            pipe_list.push(...Pipe.create_pipe_pair(Window_Width, pipe_sprite.height, pipe_sprite.height))
-            // console.log(pipe_list)
+        
+        // if (spawn_pipe_counter % settings['pipe_interval_in_frames'] == 0) {
+        //     pipe_list.push(...Pipe.create_pipe_pair(Window_Width, pipe_sprite.height, pipe_sprite.width))
+        // }
+
+        if (pipe_list.length <= 1 || pipe_list[pipe_list.length - 1].x <= Window_Width) {
+            pipe_list.push(...Pipe.create_pipe_pair(Window_Width, pipe_sprite.height, pipe_sprite.width))
         }
+
+
         pipe_list = move_pipes(pipe_list)
         draw_pipes(p5, pipe_list) 
-
+        
         // # Floor
         floor_x = (floor_x - 6) % - Window_Width
         draw_floor(p5)
 
         // # TODO: should change this for better visibility
         p5.push()
-        p5.textSize(32)
-        p5.text('Generation: ' + current_generation, Window_Width - 150, 30)
-        p5.text('Score: ' + score, Window_Width - 150, 60)
-        p5.text('Best: ' + high_score, Window_Width - 150, 90)
+        p5.textSize(14)
+        p5.text('Generation: ' + Math.floor(current_generation), Window_Width - 150, 30)
+        p5.text('Score: ' + Math.floor(Math.max(score-1.2, 0)), Window_Width - 150, 60)
+        p5.text('Best: ' + Math.floor(Math.max(high_score-1.2, 0)), Window_Width - 150, 90)
+        // p5.text('Score: ' + Math.max(score-1.7, 0), Window_Width - 150, 60)
+        // p5.text('Best: ' + Math.max(high_score-1.7, 0), Window_Width - 150, 90)
         p5.pop()
 
 
 
         var still_alive = 0;
-        // Loop through the paddles in the generation
+        // Loop through the birds in the generation
         for (var i=0; i < population.individuals.length; i++) {
             var bird = population.individuals[i];
 
             if (bird.is_alive) {
                 still_alive++;
+                // console.log(bird.y_pos, bird.x_pos)
                 //----------------------------------------inputs for neural network--------------------------------------------
 
                 var next_pipe = get_next_pipe(false)
                 var next_next_pipe = get_next_pipe(true)
-                // console.log("adadefsfsefsefsfsfsefsfsefsfsfsefsefsefsf+++++++============================")
-                // console.log(next_pipe)
+                
                 bird.x_distance_to_next_pipe_center = next_pipe.right_x() - settings['init_bird_x_pos']
-                bird.y_distance_to_next_pipe_center = (next_pipe.top_or_bottom_y() - 150) - bird.y_pos
+                bird.y_distance_to_next_pipe_center = (next_pipe.top_or_bottom_y() - 50) - bird.y_pos
                 if (next_next_pipe != null) {
                     bird.x_distance_to_next_next_pipe_center = next_next_pipe.right_x() - settings['init_bird_x_pos']
-                    bird.y_distance_to_next_next_pipe_center = (next_next_pipe.top_or_bottom_y() - 150) - bird.y_pos
+                    bird.y_distance_to_next_next_pipe_center = (next_next_pipe.top_or_bottom_y() - 50) - bird.y_pos
                 } else {
                     bird.x_distance_to_next_next_pipe_center = 0
                     bird.y_distance_to_next_next_pipe_center = 0
@@ -191,8 +201,11 @@ function Flappy(props) {
             }
         }
         // Generate new generation when all have died out
-        if (still_alive === 0)
+        // console.log(still_alive)
+        if (still_alive === 0){
+            // console.log('============================================================= pre NEW Generation =============================================================');
             next_generation(p5);
+        }
 
         // Draw the winning and champion paddle last
         if (winner !== null && winner.is_alive) {
@@ -208,8 +221,10 @@ function Flappy(props) {
 
     const draw_floor = (p5) => {
         p5.push()
-        p5.image(floor_sprite, floor_x, Window_Height - 100) 
-        p5.image(floor_sprite, floor_x + floor_sprite.width, Window_Height - 100) 
+        p5.image(floor_sprite, floor_x, Window_Height - 50) 
+        p5.image(floor_sprite, floor_x + floor_sprite.width, Window_Height - 50) 
+        p5.image(floor_sprite, floor_x + floor_sprite.width * 2, Window_Height - 50)
+        p5.image(floor_sprite, floor_x + floor_sprite.width * 3, Window_Height - 50) 
         p5.pop()
     }
 
@@ -259,10 +274,11 @@ function Flappy(props) {
     // #### GA Related ####
 
     const next_generation = (p5) => {
+        // console.log('============================================================= NEW Generation =============================================================');
         current_generation++;
         score = 0
         pipe_list.length = 0            // clear the array to []
-        pipe_list.push.apply(Pipe.create_pipe_pair(Window_Width, pipe_sprite.height, pipe_sprite.height))
+        pipe_list.push.apply(Pipe.create_pipe_pair(Window_Width, pipe_sprite.height, pipe_sprite.width))
         spawn_pipe_counter = 0
         
         // Calculate fitness of individuals

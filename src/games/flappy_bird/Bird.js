@@ -1,6 +1,10 @@
 import settings from './settings';
 import Individual from '../genetic_algorithm/individual';
 import {FeedForwardNetwork, linear, sigmoid, tanh, relu, get_activation_by_name} from './neural_network';
+import bluebird_sprite from "./assets/bluebird-midflap.png"
+import redbird_sprite from "./assets/redbird-midflap.png"
+import yellowbird_sprite from "./assets/yellowbird-midflap.png"
+
 
 
 class Bird extends Individual{
@@ -25,7 +29,9 @@ class Bird extends Individual{
         // this.bird_surface = pygame.image.load("assets/bluebird-midflap.png").convert_alpha();
         // this.bird_surface = pygame.transform.scale2x(self.bird_surface);
         // this.bird_rect = self.bird_surface.get_rect(center = (self.x_pos, self.y_pos));
-        this.bird_sprite = p5.loadImage("assets/bluebird-midflap.png");
+        this.bird_sprite = p5.loadImage(bluebird_sprite);
+        this.champbird_sprite = p5.loadImage(redbird_sprite);
+        this.winnerbird_sprite = p5.loadImage(yellowbird_sprite);
         // this.bird_surface = pygame.transform.scale2x(self.bird_surface);
         // this.bird_rect = self.bird_surface.get_rect(center = (self.x_pos, self.y_pos));
 
@@ -88,7 +94,7 @@ class Bird extends Individual{
         // # self._fitness = (self._frames) + ((2**self.score) + (self.score**2.1)*500) - (((.25 * self._frames)**1.3) * (self.score**1.2))
         // # self._fitness = (self._frames) + ((2**self.score) + (self.score**2.1)*500) - (((.25 * self._frames)) * (self.score))
         // print(self.y_distance_to_next_pipe_center)
-        this.fitness = (2 ** this.score + this.score * 2.1) * 200 + 1000 - (this.x_distance_to_next_pipe_center + Math.abs(this.y_distance_to_next_pipe_center)) * 1.2
+        this.fitness = (2 ** this.score + this.score * 2.1) * 200 + 1000 - this.x_distance_to_next_pipe_center - Math.abs(this.y_distance_to_next_pipe_center) * 20
         this.fitness = Math.max(this.fitness, .1)
     }
 
@@ -132,22 +138,21 @@ class Bird extends Individual{
 
     update = (inputs=null) => {
         this.network.feed_forward(inputs)
-        // if (this.network.out == 0) {
-        //     // do nothing
-        //     pass
-        // } else 
         if (this.network.out == 1) {
             // jump
             this.y_speed = settings['bird_jump_speed']
         }
-
+        // console.log(this.is_alive)
         return true
     }
 
     move = (pipes) => {
         this.y_pos += this.y_speed
         this.y_speed += settings['gravity']
-        this.score += 1/1.2/60
+        // this.score += 1/1.2/60
+        
+        this.score += 1 / (settings['pipe_interval_in_pixels'] / 5)
+
         this.check_collision(pipes)
     }
 
@@ -161,12 +166,19 @@ class Bird extends Individual{
         for (var pipe of pipes) {
             // if (this.bird_rect.colliderect(pipe)) {
             if (pipe.collide(this.x_pos, this.y_pos, this.bird_sprite)) {
+                // console.log("collision detected with pipe")
                 this.is_alive = false 
             }
         }
-        if (this.bird_top <= -100 || this.bird_bottom >= this.Window_Height - 100) {
+        if (this.bird_top() <= 0 || this.bird_bottom() >= this.Window_Height - 50) {
+            // console.log("*****************************collision detected with floor/ceiling")
             this.is_alive = false 
         }
+        // if (this.y_pos <= 0 || this.y_pos >= this.Window_Height - 50) {
+        //     console.log(this.y_pos, this.bird_top, this.bird_bottom)
+        //     console.log("*****************************collision detected with floor/ceiling")
+        //     this.is_alive = false 
+        // }
     }
     
 
@@ -187,26 +199,18 @@ class Bird extends Individual{
     draw = (p5, winner=false, champion=false) => {
         if (!this.is_alive) {
             return
-        } else if (champion) {
-            // this.bird_surface = pygame.image.load("assets/redbird-midflap.png").convert_alpha()
-            // this.bird_surface = pygame.transform.scale2x(this.bird_surface)
-            this.bird_sprite = p5.loadImage("assets/redbird-midflap.png");
-        } else if (winner) {
-        //     this.bird_surface = pygame.image.load("assets/yellowbird-midflap.png").convert_alpha()
-        //     this.bird_surface = pygame.transform.scale2x(this.bird_surface)
-            this.bird_sprite = p5.loadImage("assets/yellowbird-midflap.png");
-        }
-
-
-        // rotated_bird_surface = this.rotate_bird(this.bird_surface)
-        // screen.blit(rotated_bird_surface, this.bird_rect)
-
+        } 
 
         p5.push()
-        // translate(this.x_pos - this.size / 2 - 8 + birdSprite.width / 2, this.y_pos - this.size / 2 + birdSprite.height / 2);
         p5.translate(this.x_pos, this.y_pos);
         p5.rotate(this.y_speed / 20)
-        p5.image(this.bird_sprite, -this.bird_sprite.width / 2, -this.bird_sprite.height / 2)
+        if (champion) {
+            p5.image(this.champbird_sprite, -this.champbird_sprite.width / 2, -this.champbird_sprite.height / 2)
+        } else if (winner) {
+            p5.image(this.winnerbird_sprite, -this.winnerbird_sprite.width / 2, -this.winnerbird_sprite.height / 2)
+        } else {
+            p5.image(this.bird_sprite, -this.bird_sprite.width / 2, -this.bird_sprite.height / 2)
+        }
         p5.pop()
     }
 }
