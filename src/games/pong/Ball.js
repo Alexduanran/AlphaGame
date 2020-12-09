@@ -49,7 +49,7 @@ class Ball {
     }
 
     draw = (p5) => {
-        p5.fill('#8A2BE2');
+        p5.fill('#FFFFFF');
         p5.ellipse(this.xBall, this.yBall, 20, 20);
     }
 }

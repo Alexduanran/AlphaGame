@@ -117,6 +117,11 @@ function Flappy(props) {
                                         0);
             individuals.push(individual);
         }
+
+        const button = p5.createButton('Return').parent(canvasParentRef);
+        button.position(30, 10);
+        button.style('background-color', '#8A2BE2')
+        button.mousePressed(props.updateStart);
     };
 
     
@@ -129,7 +134,7 @@ function Flappy(props) {
         
         p5.push()
         p5.scale(1.75)
-        p5.image(bg_sprite, 0, 0, Window_Width, Window_Height);
+        p5.image(bg_sprite, 0, 0, Window_Width);
         p5.pop()
 
         // # Pipes

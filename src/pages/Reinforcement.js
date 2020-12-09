@@ -7,7 +7,7 @@ import {
     Link
 } from "react-router-dom";
 
-import SnakeEnv from "../games/snake/SnakeEnv"
+import SnakeEnv from "../games/snake/reinforcement_learning/SnakeEnv";
 
 function Reinforcement(props) {
 

@@ -89,13 +89,13 @@ class Paddle extends Individual{
         if (!this.is_alive) {
             return;
         } else if (champion) {
-            p5.fill('#00ff00');
+            p5.fill('#FFD700');
             p5.rect(this.xPaddle, this.yPaddle, 15, 90);
         } else if (winner) {
-            p5.fill('#00ff00');
+            p5.fill('#00FFFF');
             p5.rect(this.xPaddle, this.yPaddle, 15, 90);
         } else {
-            p5.fill('#8A2BE2');
+            p5.fill('#FFFFFF');
             p5.rect(this.xPaddle, this.yPaddle, 15, 90);
         }
     }

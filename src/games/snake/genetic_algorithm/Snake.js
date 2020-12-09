@@ -1,18 +1,17 @@
 import React from 'react';
 import Sketch from 'react-p5';
-import Paddle from './Paddle';
-import Ball from './Ball';
+import { Snake_, Apple } from './snakeClass';
 import settings from './settings';
-import Population from '../genetic_algorithm/population';
-import {FeedForwardNetwork, sigmoid, linear, relu} from './neural_network'
-import {elitism_selection, roulette_wheel_selection} from '../genetic_algorithm/selection';
-import {gaussian_mutation, random_uniform_mutation} from '../genetic_algorithm/mutation';
-import {simulated_binary_crossover as SBX} from '../genetic_algorithm/crossover';
-import {uniform_binary_crossover, single_point_binary_crossover} from '../genetic_algorithm/crossover';
+import Population from '../../genetic_algorithm/population';
+import {FeedForwardNetwork, sigmoid, linear, relu} from './neural_network';
+import {elitism_selection, roulette_wheel_selection} from '../../genetic_algorithm/selection';
+import {gaussian_mutation, random_uniform_mutation} from '../../genetic_algorithm/mutation';
+import {simulated_binary_crossover as SBX} from '../../genetic_algorithm/crossover';
+import {uniform_binary_crossover, single_point_binary_crossover} from '../../genetic_algorithm/crossover';
 const random = require('random');
 var nj = require('@aas395/numjs');
 
-function Pong(props) {
+function Snake(props) {
     const cumulativeSum = (sum => value => sum += value)(0);
     var _mutation_bins = [settings['probability_gaussian'], settings['probability_random_uniform']].map(cumulativeSum);
     var _crossover_bins = [settings['probability_SBX'], settings['probability_SPBX']].map(cumulativeSum);
@@ -32,7 +31,6 @@ function Pong(props) {
     var board_size = props.dimension;
 
     var individuals = [];
-    var balls = [];
 
     var population = new Population(individuals);
     var current_generation = 0;
@@ -42,24 +40,24 @@ function Pong(props) {
     var champion_index = -1;
     var champion_fitness = Number.NEGATIVE_INFINITY;
 
-    var num_hit = 0;
-    var best_hit = 0;
+    var num_apples = 0;
+    var best_apples = 0;
 
-    var training_paddle = null;
-    var newball = true;
+    var apple = null;
 
     const setup = (p5, canvasParentRef) => {
         // use parent to render the canvas in this ref
         // (without that p5 will render the canvas outside of your component)
         p5.createCanvas(board_size[0], board_size[1]).parent(canvasParentRef);
-        training_paddle = new Paddle(p5, board_size[0]-15, board_size[1]/2-45, 0, board_size);
         for (var i=0; i < props.settings['numParents']; i++) {
-            const individual = new Paddle(p5, 0, board_size[1]/2-45, 0, board_size, null,
+            const individual = new Snake_(p5, 200, 200, 3, random_direction(), 20, board_size, null,
                                     props.settings['hiddenLayerArchitecture'], 
                                     settings['hidden_layer_activation', 
                                     settings['output_activation']]);
             individuals.push(individual);
         }
+        apple = new Apple(20, 100, 100, board_size[0], board_size[1]);
+        apple.move();
         const button = p5.createButton('Return').parent(canvasParentRef);
         button.position(30, 10);
         button.style('background-color', '#8A2BE2')
@@ -71,65 +69,132 @@ function Pong(props) {
         p5.textSize(20);
         p5.fill('#FFFFFF');
         p5.text('Generation: '+current_generation, board_size[0]-180, 30);
-        p5.text('Hit: '+num_hit, board_size[0]-180, 60);
-        p5.text('Best: '+best_hit, board_size[0]-180, 90);
-        // New set of balls
-        if (newball) {
-            balls = [];
-            const bally = random.int(0, board_size[1]);
-            const speedy = random.int() === 1 ? 15 : -15;
-            for (var i=0; i < _next_gen_size+1; i++) {
-                balls.push(new Ball(board_size[0] / 2, bally, 15, speedy));
-            }
-            newball = false;
-        }
+        p5.text('Apples: '+num_apples, board_size[0]-180, 60);
+        p5.text('Best: '+best_apples, board_size[0]-180, 90);
 
-        // Update training paddle
-        training_paddle.update(null, balls[balls.length-1]);
-        balls[balls.length-1].update(training_paddle, board_size);
-        balls[balls.length-1].move();
-        training_paddle.is_alive = true;
-        training_paddle.draw(p5);
-
+        apple.draw(p5);
+    
         var still_alive = 0;
+        var not_reach_apple = 0;
         // Loop through the paddles in the generation
         for (var i=0; i < population.individuals.length; i++) {
-            var paddle = population.individuals[i];
+            var snake = population.individuals[i];
 
-            if (paddle.is_alive) {
+            if (snake.is_alive) {
                 still_alive++;
-                //----------------------------------------inputs for neural network--------------------------------------------
-                // const distance = ((balls[i].y - paddle.y_pos) ** 2 + (balls[i].x - paddle.x_pos) ** 2) ** 0.5;
-                // const ball_distance_left_wall = balls[i].yBall - 0;
-                // const ball_distance_right_wall = board_size[1] - balls[i].yBall;
-                const inputs = [[paddle.yPaddle], [balls[i].ySpeed], [paddle.ySpeed], [balls[i].yBall], [balls[i].xSpeed]];
-                // inputs = np.array([[paddle.x_pos], [balls[i].xspeed], [paddle.xspeed], [balls[i].x]])
-                //----------------------------------------inputs for neural network--------------------------------------------
-                paddle.update(inputs);
-                balls[i].update(paddle, board_size);
-                num_hit = Math.max(num_hit, paddle.hit);
-                best_hit = Math.max(num_hit, best_hit);
-                balls[i].move();
-                paddle.move();
+                if (!snake.reach_apple) {
+                    not_reach_apple++;
+                    //----------------------------------------inputs for neural network--------------------------------------------
+                    var new_state = Array(12).fill([0]);
+
+                    // Direction of Snake
+                    if (snake.direction == "U") {
+                        new_state[0] = [1];
+                    } else if (snake.direction == "R") {
+                        new_state[1] = [1];
+                    } else if (snake.direction == "D") {
+                        new_state[2] = [1];
+                    } else if (snake.direction == "L") {
+                        new_state[3] = [1];
+                    }
+
+                    // Apple position (wrt snake head)
+                    // (0,0) at Top-Left Corner: U: -y; R: +x
+                    if (apple.y < snake.y) {
+                        // apple north snake
+                        new_state[4] = [1]
+                    }
+                    if (apple.x > snake.x) {
+                        // apple east snake
+                        new_state[5] = [1]
+                    }
+                    if (apple.y > snake.y) {
+                        // apple south snake
+                        new_state[6] = [1]
+                    }
+                    if (apple.x < snake.x) {
+                        // apple west snake
+                        new_state[7] = [1]
+                    }
+
+                    // Obstacle (Walls, body) position (wrt snake head)
+                    var test_snake;
+                    const test_case = {
+                        "U": {oppo: "D", x: 0, y: -20, state: 8},
+                        "R": {oppo: "L", x: 20, y: 0, state: 9},
+                        "D": {oppo: "U", x: 0, y: 20, state: 10},
+                        "L": {oppo: "R", x: -20, y: 0, state: 11}
+                    };
+                    for (var key in test_case) {
+                        var test = test_case[key];
+                        if (snake.direction != test["oppo"]) {
+                            test_snake = new Snake_(p5, snake.x + test['x'], snake.y+test['y'], 1, 'U', 20, board_size, null,
+                                        props.settings['hiddenLayerArchitecture'], 
+                                        settings['hidden_layer_activation', 
+                                        settings['output_activation']]);
+                            if (test_snake.collideWithWall()) {
+                                new_state[test["state"]] = [1];
+                            }
+                        }
+                    }
+                    const inputs = new_state;
+                    //----------------------------------------inputs for neural network--------------------------------------------
+                    snake.updateDirection(inputs);
+                    const pos_cur = [snake.x, snake.y];
+                    snake.addHead();
+                    const pos_next = [snake.x, snake.y];
+                    const pos_apple = [apple.x, apple.y];
+                    const d1 = Math.hypot(pos_apple[0]-pos_cur[0], pos_apple[1]-pos_cur[1]);
+                    const d2 = Math.hypot(pos_apple[0]-pos_next[0], pos_apple[1]-pos_next[1]);
+                    if (d1 > d2)
+                        snake.distance++;
+                    else if (d1 < d2)
+                        snake.distance -= 1.1;
+                    if (snake.collideWithWall() || snake.collideWithBody()) {
+                        snake.is_alive = false;
+                    }
+                    if (!snake.head.collideRect(apple.rect)) {
+                        snake.deleteTail();
+                        snake.steps++;
+                        snake.total_steps++;
+                        if (snake.steps > board_size[0] / 2 + 20) {
+                            snake.total_steps = Number.POSITIVE_INFINITY;
+                            console.log('dead')
+                            snake.is_alive = false;
+                        } 
+                    } else {
+                            snake.apples++;
+                            snake.steps = 0;
+                            snake.reach_apple = true;
+                    }
+                }
             }
 
             // Draw every paddle except the best ones
-            if (paddle.is_alive && paddle !== winner && paddle !== champion) {
-                // paddle.winner = False
-                // paddle.champion = False
-                balls[i].draw(p5);
-                paddle.draw(p5);
+            if (snake.is_alive && snake !== winner && snake !== champion) {
+                snake.draw(p5);
             }
         }
 
         // Draw the winning and champion paddle last
         if (winner !== null && winner.is_alive) {
-            balls[winner_index].draw(p5);
-            winner.draw(p5, true, false);
+            winner.draw(p5);
         }
         if (champion !== null && champion.is_alive) {
-            balls[champion_index].draw(p5);
-            champion.draw(p5, false, true);
+            champion.draw(p5);
+        }
+
+        if (not_reach_apple === 0) {
+            apple.move();
+            num_apples++;
+            if (num_apples > best_apples)
+                best_apples = num_apples;
+            for (var snake_ of population.individuals) {
+                if (snake_.is_alive) {
+                    snake_.steps = 0;
+                    snake_.reach_apple = false;
+                }
+            }
         }
 
         // Generate new generation when all have died out
@@ -137,14 +202,20 @@ function Pong(props) {
             next_generation(p5);
     };
 
+    const random_direction = () => {
+        const dir = ['U','D','L','R'];
+        var index = Math.floor(Math.random() * dir.length);
+        return dir[index];
+    }
+
     const next_generation = (p5) => {
         current_generation++;
-        newball = true;
-        num_hit = 0;
+        num_apples = 0;
         
         // Calculate fitness of individuals
         for (var individual of population.individuals)
             individual.calculate_fitness();
+            console.log(individual.fitness)
         
         // Find winner from each generation and champion
         winner = population.fittest_individual();
@@ -186,7 +257,7 @@ function Pong(props) {
             // Because of this I need to perform crossover/mutation on each chromosome between parents
             for (var l = 1; l < L; l++) {
                 const p1_W_l = p1.network.params['W' + l.toString()]
-                const p2_W_l = p2.network.params['W' + l.toString()]
+                const p2_W_l = p2.network.params['W' + l.toString()]  
                 const p1_b_l = p1.network.params['b' + l.toString()]
                 const p2_b_l = p2.network.params['b' + l.toString()]
 
@@ -222,11 +293,11 @@ function Pong(props) {
             }
 
             // Create children from chromosomes generated above
-            var c1 = new Paddle(p5, 0, board_size[1]/2-45, 0, board_size, c1_params,
+            var c1 = new Snake_(p5, 200, 200, 3, random_direction(), 20, board_size, c1_params,
                         props.settings['hiddenLayerArchitecture'], 
                         settings['hidden_layer_activation', 
                         settings['output_activation']]);
-            var c2 = new Paddle(p5, 0, board_size[1]/2-45, 0, board_size, c2_params,
+            var c2 = new Snake_(p5, 200, 200, 3, random_direction(), 20, board_size, c2_params,
                         props.settings['hiddenLayerArchitecture'], 
                         settings['hidden_layer_activation', 
                         settings['output_activation']]);
@@ -334,4 +405,4 @@ function Pong(props) {
     );
 }
 
-export default React.memo(Pong, (prevProps, nextProps) => {return true});
+export default React.memo(Snake, (prevProps, nextProps) => {return true});

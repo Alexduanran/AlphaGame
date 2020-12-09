@@ -10,9 +10,8 @@ import {
 import GeneticParams from './GeneticParams';
 import Plot from './Plot';
 import Pong from '../games/pong/Pong';
-import SnakeEnv from '../games/snake/SnakeEnv';
+import Snake from '../games/snake/genetic_algorithm/Snake';
 import Flappy from '../games/flappy_bird/Flappy';
-// import Game from './Game'
 
 function Genetic(props) {
     const gameParentRef = useRef(null);
@@ -87,11 +86,14 @@ function Genetic(props) {
                             :
                             <Switch>
                                 <Route path='/snake'>
-                                    {/* {
+                                    {
                                         gameScreenDimension.width === 0 ?
                                         <div></div> : <Snake dimension={[gameScreenDimension.width, gameScreenDimension.height]}
-                                                            settings={settings}/>
-                                    } */}
+                                                            settings={settings}
+                                                            updateStart={updateStart}
+                                                            addAvgFitness={addAvgFitness}
+                                                            addMaxFitness={addMaxFitness}/>
+                                    }
                                 </Route>
                                 <Route path='/pong'>
                                     {
@@ -117,27 +119,12 @@ function Genetic(props) {
                         }
                     </div>
                     <div className={css.plotScreen} ref={plotParentRef}>
-                        <Switch>
-                            <Route path='/snake'>
-                                snake
-                            </Route>
-                            <Route path='/pong'>
-                                {
-                                    plotScreenDimension.width === 0 ?
-                                    <div></div> : <Plot dimension={[plotScreenDimension.width, plotScreenDimension.height]}
-                                                        avgFitness={avgFitness}
-                                                        maxFitness={maxFitness}/>
-                                }
-                            </Route>
-                            <Route path='/flappybird'>
-                                {
-                                    plotScreenDimension.width === 0 ?
-                                    <div></div> : <Plot dimension={[plotScreenDimension.width, plotScreenDimension.height]}
-                                                        avgFitness={avgFitness}
-                                                        maxFitness={maxFitness}/>
-                                }
-                            </Route>
-                        </Switch>
+                        {
+                            plotScreenDimension.width === 0 ?
+                            <div></div> : <Plot dimension={[plotScreenDimension.width, plotScreenDimension.height]}
+                                                avgFitness={avgFitness}
+                                                maxFitness={maxFitness}/>
+                        }   
                     </div>
                 </div>
             </div>
