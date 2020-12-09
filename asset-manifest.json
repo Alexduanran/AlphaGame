@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/AlphaGame/static/css/main.75339de8.chunk.css",
-    "main.js": "/AlphaGame/static/js/main.9ecc079d.chunk.js",
-    "main.js.map": "/AlphaGame/static/js/main.9ecc079d.chunk.js.map",
-    "runtime-main.js": "/AlphaGame/static/js/runtime-main.173f1c1e.js",
-    "runtime-main.js.map": "/AlphaGame/static/js/runtime-main.173f1c1e.js.map",
+    "main.css": "/AlphaGame/static/css/main.20a57031.chunk.css",
+    "main.js": "/AlphaGame/static/js/main.c9050cd7.chunk.js",
+    "main.js.map": "/AlphaGame/static/js/main.c9050cd7.chunk.js.map",
+    "runtime-main.js": "/AlphaGame/static/js/runtime-main.95e19a04.js",
+    "runtime-main.js.map": "/AlphaGame/static/js/runtime-main.95e19a04.js.map",
     "static/css/2.e365e689.chunk.css": "/AlphaGame/static/css/2.e365e689.chunk.css",
-    "static/js/2.ce61cdaa.chunk.js": "/AlphaGame/static/js/2.ce61cdaa.chunk.js",
-    "static/js/2.ce61cdaa.chunk.js.map": "/AlphaGame/static/js/2.ce61cdaa.chunk.js.map",
-    "static/js/3.29fd23e3.chunk.js": "/AlphaGame/static/js/3.29fd23e3.chunk.js",
-    "static/js/3.29fd23e3.chunk.js.map": "/AlphaGame/static/js/3.29fd23e3.chunk.js.map",
+    "static/js/2.02af55a2.chunk.js": "/AlphaGame/static/js/2.02af55a2.chunk.js",
+    "static/js/2.02af55a2.chunk.js.map": "/AlphaGame/static/js/2.02af55a2.chunk.js.map",
+    "static/js/3.fed1d76e.chunk.js": "/AlphaGame/static/js/3.fed1d76e.chunk.js",
+    "static/js/3.fed1d76e.chunk.js.map": "/AlphaGame/static/js/3.fed1d76e.chunk.js.map",
     "index.html": "/AlphaGame/index.html",
     "static/css/2.e365e689.chunk.css.map": "/AlphaGame/static/css/2.e365e689.chunk.css.map",
-    "static/css/main.75339de8.chunk.css.map": "/AlphaGame/static/css/main.75339de8.chunk.css.map",
-    "static/js/2.ce61cdaa.chunk.js.LICENSE.txt": "/AlphaGame/static/js/2.ce61cdaa.chunk.js.LICENSE.txt",
+    "static/css/main.20a57031.chunk.css.map": "/AlphaGame/static/css/main.20a57031.chunk.css.map",
+    "static/js/2.02af55a2.chunk.js.LICENSE.txt": "/AlphaGame/static/js/2.02af55a2.chunk.js.LICENSE.txt",
     "static/media/Genetic.module.css": "/AlphaGame/static/media/2ds_black.3b249f75.png",
     "static/media/Reinforcement.module.css": "/AlphaGame/static/media/3ds_black.c8a10f0c.png",
     "static/media/Battle.module.css": "/AlphaGame/static/media/ds_black.88a10812.png",
@@ -26,10 +26,10 @@
     "static/media/Home.module.css": "/AlphaGame/static/media/switch_black.2fb50e10.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.173f1c1e.js",
+    "static/js/runtime-main.95e19a04.js",
     "static/css/2.e365e689.chunk.css",
-    "static/js/2.ce61cdaa.chunk.js",
-    "static/css/main.75339de8.chunk.css",
-    "static/js/main.9ecc079d.chunk.js"
+    "static/js/2.02af55a2.chunk.js",
+    "static/css/main.20a57031.chunk.css",
+    "static/js/main.c9050cd7.chunk.js"
   ]
 }
