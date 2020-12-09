@@ -4,7 +4,7 @@ import { Form, FormControl, InputGroup, Button, ButtonGroup, Tooltip, OverlayTri
 function GeneticParams(props) {
     const [numLayer, setNumLayer] = useState(2);
     const [hiddenLayerArchitecture, setHiddenLayerArchitecture] = useState([12, 6]);
-    const [mutationRate, setMutationRate] = useState(0.5);
+    const [mutationRate, setMutationRate] = useState(0.05);
     const [mutationRateType, setMutationRateType] = useState('static');
     const [numParents, setNumParents] = useState(50);
     const [numOffsprings, setNumOffsprings] = useState(100);
