@@ -94,7 +94,7 @@ class Bird extends Individual{
         // # self._fitness = (self._frames) + ((2**self.score) + (self.score**2.1)*500) - (((.25 * self._frames)**1.3) * (self.score**1.2))
         // # self._fitness = (self._frames) + ((2**self.score) + (self.score**2.1)*500) - (((.25 * self._frames)) * (self.score))
         // print(self.y_distance_to_next_pipe_center)
-        this.fitness = (2 ** this.score + this.score * 2.1) * 200 + 1000 - this.x_distance_to_next_pipe_center - Math.abs(this.y_distance_to_next_pipe_center) * 20
+        this.fitness = (this.score ** 2 + this.score * 2.1) * 200 + 1000 - this.x_distance_to_next_pipe_center - Math.abs(this.y_distance_to_next_pipe_center) * 20
         this.fitness = Math.max(this.fitness, .1)
     }
 
